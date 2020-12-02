@@ -34,23 +34,34 @@ const countriesActionTypes = {
 export const countriesActionCreators = {
   loading: () => ({type: countriesActionTypes.LOADING}),
   failure: () => ({type: countriesActionTypes.FAILURE}),
-  success: (payload: CountryItem[]) => ({type: countriesActionTypes.SUCCESS, payload})
+  success: (payload: CountryItem[]) => ({
+    type: countriesActionTypes.SUCCESS,
+    payload,
+  }),
 };
 
 export const countriesInitialState: CountriesState = {
   loading: true,
   error: false,
-  countries: undefined
+  countries: undefined,
 };
 
-export function countriesReducer(state: CountriesState, action: CountriesAction): CountriesState {
+export function countriesReducer(
+  state: CountriesState,
+  action: CountriesAction,
+): CountriesState {
   switch (action.type) {
     case countriesActionTypes.LOADING:
-      return { ...state, loading: true, error: false};
+      return {...state, loading: true, error: false};
     case countriesActionTypes.FAILURE:
-      return { ...state, loading: false, error: true};
+      return {...state, loading: false, error: true};
     case countriesActionTypes.SUCCESS:
-      return { ...state, loading: false, error: false, countries: action.payload};
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        countries: action.payload,
+      };
     default:
       return state;
   }

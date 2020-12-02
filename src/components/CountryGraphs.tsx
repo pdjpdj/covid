@@ -1,10 +1,11 @@
-import { Picker } from '@react-native-picker/picker';
-import React, { useState } from 'react';
-import { Dimensions, View } from 'react-native';
-import { LineChart } from 'react-native-chart-kit';
-import { CountryTotalItem } from '../reducers/country';
+/* eslint-disable react-native/no-inline-styles */
+import {Picker} from '@react-native-picker/picker';
+import React, {useState} from 'react';
+import {Dimensions, View} from 'react-native';
+import {LineChart} from 'react-native-chart-kit';
+import {CountryTotalItem} from '../reducers/country';
 import styles from '../styles/styles';
-import { getData, pickerChoices } from '../utils/pickerChoices';
+import {getData, pickerChoices} from '../utils/pickerChoices';
 
 interface CountryGraphsProps {
   totals: CountryTotalItem[];
@@ -14,10 +15,7 @@ function CountryGraphs({totals}: CountryGraphsProps) {
   const [dataChoice, setDataChoice] = useState(pickerChoices[0].value);
 
   if (!totals) {
-    return (
-      <View style={styles.totals}>
-      </View>
-    );
+    return <View style={styles.totals} />;
   }
 
   const data = getData(totals, dataChoice);
@@ -29,11 +27,11 @@ function CountryGraphs({totals}: CountryGraphsProps) {
           labels: [],
           datasets: [
             {
-              data: data
-            }
-          ]
+              data: data,
+            },
+          ],
         }}
-        width={Dimensions.get('window').width-34}
+        width={Dimensions.get('window').width - 34}
         height={320}
         yAxisInterval={1000}
         withDots={false}
@@ -64,9 +62,14 @@ function CountryGraphs({totals}: CountryGraphsProps) {
         <Picker
           selectedValue={dataChoice}
           style={{}}
-          itemStyle={{color:'black', height: 100, fontSize: 14, fontWeight: '400'}}
-          onValueChange={(value, index) => setDataChoice(value.toString())}>
-            {pickerChoices.map(pickerItem => 
+          itemStyle={{
+            color: 'black',
+            height: 100,
+            fontSize: 14,
+            fontWeight: '400',
+          }}
+          onValueChange={(value) => setDataChoice(value.toString())}>
+          {pickerChoices.map((pickerItem) => (
               <Picker.Item label={pickerItem.label} value={pickerItem.value} key={pickerItem.value}/>
             )}
         </Picker>

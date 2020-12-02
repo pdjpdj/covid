@@ -1,25 +1,19 @@
-import { StackScreenProps } from '@react-navigation/stack';
-import React, { useEffect, useReducer } from 'react';
-import {
-  View,
-  Text,
-  ActivityIndicator,
-} from 'react-native';
-import { fetchTotal } from '../api/covid19Data';
-import { RootStackParamList } from '../App';
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useEffect, useReducer} from 'react';
+import {View, Text, ActivityIndicator} from 'react-native';
+import {fetchTotal} from '../api/covid19Data';
+import {RootStackParamList} from '../App';
 import PrimaryButton from '../components/PrimaryButton';
 import Totals from '../components/Totals';
-import { totalInitialState, totalReducer } from '../reducers/total';
+import {totalInitialState, totalReducer} from '../reducers/total';
 import styles from '../styles/styles';
 
-type HomeScreenProps = StackScreenProps<
-  RootStackParamList, 
-  'Home'>;
+type HomeScreenProps = StackScreenProps<RootStackParamList, 'Home'>;
 
-const HomeScreen = ({navigation, route}: HomeScreenProps) => {
+const HomeScreen = ({navigation}: HomeScreenProps) => {
   const [state, dispatch] = useReducer(totalReducer, totalInitialState);
 
-  const {loading, totals, error } = state;
+  const {loading, totals, error} = state;
 
   useEffect(() => {
     fetchTotal(dispatch);
@@ -48,10 +42,11 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
       </View>
       <Totals totals={totals} />
       <PrimaryButton
-        text='Search countries'
-        onPressItem={() => navigation.push('Countries')} />
+        text="Search countries"
+        onPressItem={() => navigation.push('Countries')}
+      />
     </View>
   );
-}
+};
 
 export default HomeScreen;

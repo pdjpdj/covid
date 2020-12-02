@@ -1,4 +1,3 @@
-
 export interface CountryTotalItem {
   Country: string;
   CountryCode: string;
@@ -34,7 +33,10 @@ const countryActionTypes = {
 export const countryActionCreators = {
   loading: () => ({type: countryActionTypes.LOADING}),
   failure: () => ({type: countryActionTypes.FAILURE}),
-  success: (payload: CountryTotalItem[]) => ({type: countryActionTypes.SUCCESS, payload})
+  success: (payload: CountryTotalItem[]) => ({
+    type: countryActionTypes.SUCCESS,
+    payload,
+  }),
 };
 
 export const countryInitialState: CountryState = {
@@ -43,14 +45,17 @@ export const countryInitialState: CountryState = {
   totals: [],
 };
 
-export function countryReducer(state: CountryState, action: CountryAction): CountryState {
+export function countryReducer(
+  state: CountryState,
+  action: CountryAction,
+): CountryState {
   switch (action.type) {
     case countryActionTypes.LOADING:
-      return { ...state, loading: true, error: false};
+      return {...state, loading: true, error: false};
     case countryActionTypes.FAILURE:
-      return { ...state, loading: false, error: true};
+      return {...state, loading: false, error: true};
     case countryActionTypes.SUCCESS:
-      return { ...state, loading: false, error: false, totals: action.payload};
+      return {...state, loading: false, error: false, totals: action.payload};
     default:
       return state;
   }

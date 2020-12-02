@@ -1,18 +1,15 @@
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import { CountryItem } from '../reducers/countries';
-// import styles from '../styles/styles';
+import {Dimensions, StyleSheet, View} from 'react-native';
+import MapView, {Marker} from 'react-native-maps';
+import {CountryItem} from '../reducers/countries';
 
 interface CountryMapProps {
   country: CountryItem;
 }
 
-
 function CountryMap({country}: CountryMapProps) {
   const lat = Number(country.latitude);
   const lon = Number(country.longitude);
-
 
   console.log(country);
   console.log(`Going to: (${lat} , ${lon})`);
@@ -26,18 +23,17 @@ function CountryMap({country}: CountryMapProps) {
           longitude: lon,
           latitudeDelta: 8,
           longitudeDelta: 4,
-        }}
-      >
-        <Marker coordinate={{latitude: lat, longitude: lon}}/>
+        }}>
+        <Marker coordinate={{latitude: lat, longitude: lon}} />
       </MapView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     height: 200,
-    width: Dimensions.get('window').width-34,
+    width: Dimensions.get('window').width - 34,
     justifyContent: 'flex-end',
     alignItems: 'center',
     borderRadius: 8,
@@ -48,6 +44,6 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     borderRadius: 8,
   },
- });
+});
 
 export default CountryMap;

@@ -1,28 +1,21 @@
-import { StackScreenProps } from '@react-navigation/stack';
-import React, { useEffect, useReducer } from 'react';
-import {
-  View,
-  Text,
-  ActivityIndicator,
-  Image,
-} from 'react-native';
-import { fetchCountryTotal } from '../api/covid19Data';
-import { RootStackParamList } from '../App';
+import {StackScreenProps} from '@react-navigation/stack';
+import React, {useEffect, useReducer} from 'react';
+import {View, Text, ActivityIndicator, Image} from 'react-native';
+import {fetchCountryTotal} from '../api/covid19Data';
+import {RootStackParamList} from '../App';
 import CountryTotals from '../components/CountryTotals';
 import CountryGraphs from '../components/CountryGraphs';
-import { countryInitialState, countryReducer } from '../reducers/country';
+import {countryInitialState, countryReducer} from '../reducers/country';
 import styles from '../styles/styles';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 import CountryMap from '../components/CountryMap';
 
-type CountryScreenProps = StackScreenProps<
-  RootStackParamList, 
-  'Country'>;
+type CountryScreenProps = StackScreenProps<RootStackParamList, 'Country'>;
 
-const CountryScreen = ({navigation, route}: CountryScreenProps) => {
+const CountryScreen = ({route}: CountryScreenProps) => {
   const [state, dispatch] = useReducer(countryReducer, countryInitialState);
 
-  const {loading, totals, error } = state;
+  const {loading, totals, error} = state;
 
   const code = route.params.country.ISO2;
   const slug = route.params.country.Slug;
@@ -30,7 +23,7 @@ const CountryScreen = ({navigation, route}: CountryScreenProps) => {
 
   useEffect(() => {
     fetchCountryTotal(slug, dispatch);
-  }, []);
+  }, [slug]);
 
   if (loading) {
     return (
@@ -52,12 +45,16 @@ const CountryScreen = ({navigation, route}: CountryScreenProps) => {
     return (
       <View style={styles.countriesContainer}>
         <View style={styles.countryTitleContainer}>
-        <Text style={styles.title}>{slug}</Text> 
-        <Image
-          style={styles.flag}
-          source={{uri: `https://ipworld.info/static/flags/${code ? code.toLowerCase() : ''}.png`}}
-        />
-      </View>
+          <Text style={styles.title}>{slug}</Text>
+          <Image
+            style={styles.flag}
+            source={{
+              uri: `https://ipworld.info/static/flags/${
+                code ? code.toLowerCase() : ''
+              }.png`,
+            }}
+          />
+        </View>
         <CountryTotals totals={totals} />
       </View>
     );
@@ -70,7 +67,11 @@ const CountryScreen = ({navigation, route}: CountryScreenProps) => {
           <Text style={styles.title}>{totals[0].Country}</Text> 
           <Image
             style={styles.flag}
-            source={{uri: `https://ipworld.info/static/flags/${code ? code.toLowerCase() : ''}.png`}}
+            source={{
+              uri: `https://ipworld.info/static/flags/${
+                code ? code.toLowerCase() : ''
+              }.png`,
+            }}
           />
         </View>
         <CountryTotals totals={totals} />
@@ -79,6 +80,6 @@ const CountryScreen = ({navigation, route}: CountryScreenProps) => {
       </View>
     </ScrollView>
   );
-}
+};
 
 export default CountryScreen;
